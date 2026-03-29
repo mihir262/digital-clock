@@ -30,8 +30,32 @@ void DrawSegment(Vector2 center, bool horizontal){
     }
 
     Vector2 points[] = {a,b,c,d,e,f};
-
     DrawTriangleStrip(points, count, SKYBLUE);
+}
+
+void DrawDigit(Vector2 center){
+
+    // draw first
+    Vector2 first = {center.x, center.y - segment_width};
+    DrawSegment(first, true);
+
+    Vector2 second = {center.x - segment_width/2, center.y - segment_width/2};
+    DrawSegment(second, false);
+
+    Vector2 third = {center.x + segment_width/2, center.y - segment_width/2};
+    DrawSegment(third, false);
+
+    Vector2 fourth = {center.x,center.y}; //middle one
+    DrawSegment(fourth,true);
+
+    Vector2 fifth = {center.x - segment_width/2,center.y + segment_width/2};
+    DrawSegment(fifth, false);
+
+    Vector2 sixth = {center.x + segment_width/2,center.y + segment_width/2};
+    DrawSegment(sixth, false);
+
+    Vector2 seventh = {center.x, center.y + segment_width};
+    DrawSegment(seventh, true);
 }
 
 int main(){
@@ -45,12 +69,10 @@ int main(){
     while (!WindowShouldClose()){
         BeginDrawing();
         ClearBackground(BLACK);
+        SetTargetFPS(60);
 
-        Vector2 center = (Vector2){300,200};
-        DrawSegment(center,true);
+        DrawDigit((Vector2){WIDTH/2,HEIGHT/2});
 
-        Vector2 other_center = (Vector2){400,400};
-        DrawSegment(other_center,false);
         EndDrawing();
     }
 
