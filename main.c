@@ -8,20 +8,30 @@
 float segment_width = 200;
 float segment_height = 50;
 
-void DrawSegment(Vector2 center){
-        // making the 7 segment display
-        int count = 6;
+void DrawSegment(Vector2 center, bool horizontal){
+    int count = 6;
+    Vector2 a,b,c,d,e,f;
 
-        Vector2 a,b,c,d,e,f;
+    if(horizontal){
         a = (Vector2){center.x - segment_width/2 - segment_height/2, center.y};
-        b = (Vector2){center.x - segment_width/2, center.y - segment_height/2};
-        c = (Vector2){center.x - segment_width/2, center.y + segment_height/2};
-        d = (Vector2){center.x + segment_width/2, center.y - segment_height/2};
-        e = (Vector2){center.x + segment_width/2, center.y + segment_height/2};
+        c = (Vector2){center.x - segment_width/2, center.y - segment_height/2};
+        b = (Vector2){center.x - segment_width/2, center.y + segment_height/2};
+        e = (Vector2){center.x + segment_width/2, center.y - segment_height/2};
+        d = (Vector2){center.x + segment_width/2, center.y + segment_height/2};
         f = (Vector2){center.x + segment_width/2 + segment_height/2, center.y};
+    }
+    else{
+        a = (Vector2){center.x, center.y - segment_width/2 - segment_height/2};
+        b = (Vector2){center.x - segment_height/2, center.y - segment_width/2};
+        c = (Vector2){center.x + segment_height/2, center.y - segment_width/2};
+        d = (Vector2){center.x - segment_height/2, center.y + segment_width/2};
+        e = (Vector2){center.x + segment_height/2, center.y + segment_width/2};
+        f = (Vector2){center.x, center.y + segment_width/2 + segment_height/2};
+    }
 
-        Vector2 points[] = {a,c,b,e,d,f};
-        DrawTriangleStrip(points, count, SKYBLUE);
+    Vector2 points[] = {a,b,c,d,e,f};
+
+    DrawTriangleStrip(points, count, SKYBLUE);
 }
 
 int main(){
@@ -34,8 +44,13 @@ int main(){
 
     while (!WindowShouldClose()){
         BeginDrawing();
-        Vector2 center = {WIDTH/2, HEIGHT/2};
-        DrawSegment((Vector2){300, 200});
+        ClearBackground(BLACK);
+
+        Vector2 center = (Vector2){300,200};
+        DrawSegment(center,true);
+
+        Vector2 other_center = (Vector2){400,400};
+        DrawSegment(other_center,false);
         EndDrawing();
     }
 
